@@ -1,0 +1,47 @@
+name: Security agent
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: security-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-and-scan:
+    name: Tests and security scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read # Checkout do código, sem permissão de escrita.
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.11'
+      - name: Install agent and pinned scanners
+        run: |
+          python -m pip install -r requirements.txt
+          python -m pip install --no-build-isolation --no-deps -e .
+          python scripts/install_scanners.py
+          echo "$GITHUB_WORKSPACE/.tools/bin" >> "$GITHUB_PATH"
+      - name: Unit tests
+        run: python -m pytest
+      - name: Integration tests
+        run: python -m pytest -m integration
+      - name: Scan repository
+        if: ${{ !cancelled() }}
+        run: sc-agent scan --repo . --out security-report
+      - name: Upload reports even on failure
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: security-report
+          path: security-report/
+          if-no-files-found: warn
+          retention-days: 7

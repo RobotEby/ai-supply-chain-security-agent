@@ -1,0 +1,8 @@
+[project]
+name = "uv-example"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = ["urllib3==1.26.18"]
+
+[dependency-groups]
+dev = ["jinja2==3.1.2"]

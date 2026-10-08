@@ -1,0 +1,18 @@
+{
+  "trivy": {
+    "Version": "0.75.0",
+    "VulnerabilityDB": {
+      "Version": 2,
+      "NextUpdate": "2026-10-09T15:33:46.578790805Z",
+      "UpdatedAt": "2026-10-08T15:33:46.578791096Z",
+      "DownloadedAt": "2026-10-08T19:45:20.580144459Z"
+    },
+    "CheckBundle": {
+      "Digest": "sha256:1583562f8b90ed2a071b99f0e5ffff6b57e4ceb6ca3e4796577b4e6a339eb74c",
+      "DownloadedAt": "2026-10-08T19:45:25.741365251Z"
+    }
+  },
+  "zizmor": {
+    "Version": "1.30.1"
+  }
+}

@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools==84.0.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ai-supply-chain-security-agent"
+version = "0.1.0"
+description = "Análise local de supply chain com correções para revisão humana"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["packaging==26.2"]
+
+[project.optional-dependencies]
+dev = ["pytest==9.0.3"]
+
+[project.scripts]
+sc-agent = "sc_agent.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["integration: requer scanners reais e, para Trivy, acesso à base de vulnerabilidades"]
+addopts = "-m 'not integration'"

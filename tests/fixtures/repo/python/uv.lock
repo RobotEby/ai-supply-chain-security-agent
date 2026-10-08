@@ -1,0 +1,28 @@
+version = 1
+revision = 3
+requires-python = ">=3.11"
+
+[[package]]
+name = "uv-example"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [{ name = "urllib3" }]
+
+[package.dev-dependencies]
+dev = [{ name = "jinja2" }]
+
+[package.metadata]
+requires-dist = [{ name = "urllib3", specifier = "==1.26.18" }]
+
+[package.metadata.requires-dev]
+dev = [{ name = "jinja2", specifier = "==3.1.2" }]
+
+[[package]]
+name = "urllib3"
+version = "1.26.18"
+source = { registry = "https://pypi.org/simple" }
+
+[[package]]
+name = "jinja2"
+version = "3.1.2"
+source = { registry = "https://pypi.org/simple" }

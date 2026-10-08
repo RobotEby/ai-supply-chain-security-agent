@@ -1,0 +1,10 @@
+name: Example
+on: pull_request
+permissions: {}
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "$PR_TITLE"
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
